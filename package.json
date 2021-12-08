@@ -1,0 +1,32 @@
+{
+    "name": "@d-gs/google-analytics-js",
+    "version": "0.1.1",
+    "description": "Google Analytics JS.",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "author": "__d",
+    "license": "MIT",
+    "keywords": [],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/glamseam/google-analytics-js.git"
+    },
+    "bugs": {
+        "url": "https://github.com/glamseam/google-analytics-js/issues"
+    },
+    "scripts": {
+        "prebuild": "rimraf ./dist",
+        "build": "tsc",
+        "pub": "npm run build && npm publish --access=public"
+    },
+    "devDependencies": {
+        "@d-gs/eslint-config": "^0.1.10",
+        "@types/gtag.js": "^0.0.8",
+        "eslint": "^8.4.1",
+        "rimraf": "^3.0.2",
+        "typescript": "^4.5.2"
+    }
+}
