@@ -1,6 +1,6 @@
 {
     "name": "@d-gs/google-analytics-js",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Google Analytics JS.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -9,7 +9,12 @@
     ],
     "author": "__d",
     "license": "MIT",
-    "keywords": [],
+    "keywords": [
+        "google",
+        "analytics",
+        "javascript",
+        "typescript"
+    ],
     "repository": {
         "type": "git",
         "url": "git+https://github.com/glamseam/google-analytics-js.git"
