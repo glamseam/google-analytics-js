@@ -1,16 +1,18 @@
-interface SendEventOptions {
+export interface SendEventOptions {
     category?: string
     label?: string
     value?: number
 }
 
-interface GoogleAnalytics {
+export interface GoogleAnalyticsOptions {
     measurementIdSecondary?: string
     isForceEnabled?: boolean
     forceEnabledKey?: string
     stateKey?: string
     scriptId?: string
 }
+
+export type GoogleAnalyticsJs = ReturnType<typeof googleAnalyticsJs>
 
 const gtagScript = (measurementId: string) => {
     return `window.dataLayer = window.dataLayer || [];
@@ -51,7 +53,7 @@ export const googleAnalyticsJs = (
         isForceEnabled = false,
         stateKey = 'isEnabledGa',
         scriptId = 'googleTagManagerScript'
-    }: GoogleAnalytics = {}
+    }: GoogleAnalyticsOptions = {}
 ) => {
     const init = () => {
         if (
