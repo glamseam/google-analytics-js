@@ -1,11 +1,10 @@
 import { inject } from 'vue'
 import type { InjectionKey, Plugin } from 'vue'
-import { useRouter } from 'vue-router'
 import { googleAnalyticsJs } from './index'
 import type { GoogleAnalyticsJs, GoogleAnalyticsOptions } from './index'
 
 export interface PluginOptions {
-    measurementId: string
+    measurementIds: string[]
     options: GoogleAnalyticsOptions
 }
 
@@ -23,15 +22,6 @@ export const useGoogleAnalytics = () => {
 
 export const pluginGoogleAnalytics: Plugin = {
     install: (app, options: PluginOptions) => {
-        app.provide(googleAnalyticsJsKey, googleAnalyticsJs(options.measurementId, options.options))
+        app.provide(googleAnalyticsJsKey, googleAnalyticsJs(options.measurementIds, options.options))
     }
-}
-
-export const sendPageView = () => {
-    const googleAnalytics = useGoogleAnalytics()
-    useRouter().beforeEach((to) => {
-        googleAnalytics.toNext(to.fullPath)
-
-        return true
-    })
 }
