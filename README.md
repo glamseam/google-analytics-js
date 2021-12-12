@@ -15,9 +15,8 @@ In `some.js(ts)`
 ```js
 import { googleAnalyticsJs } from '@d-gs/google-analytics-js'
 const ga = googleAnalyticsJs(
-  'G-XXXXXXXXXX',  // Your measurement id (required)
+  ['G-XXXXXXXXXX', 'G-XXXXXXXXXX'],  // Your measurement ids (required)
   {  // Options
-    measurementIdSecondary: 'G-XXXXXXXXXX',  // Your secondary measurement id (default: undefined)
     isForceEnabled: false,  // (default: false)
     stateKey: 'isEnabledGa',  // localStorage key (default: `isEnabledGa`)
     scriptId: 'googleTagManagerScript'  // gtag script id (default: `googleTagManagerScript`)
@@ -43,7 +42,7 @@ In `app.ts`
 import { pluginGoogleAnalytics } from '@d-gs/google-analytics-js/dist/plugin-vue'
 app.use(pluginGoogleAnalytics(
   {
-    measurementId: 'G-XXXXXXXXXX',
+    measurementIds: ['G-XXXXXXXXXX', 'G-XXXXXXXXXX'],
     options: {
         isForceEnabled: true
     }
@@ -59,18 +58,6 @@ import { useGoogleAnalytics } from '@d-gs/google-analytics-js/dist/plugin-vue'
 
 const ga = useGoogleAnalytics()
 ga.init()
-</script>
-```
-
-In `App.vue` with vue-router4
-
-```vue
-<script lang="ts" setup>
-import { useGoogleAnalytics, sendPageView } from '@d-gs/google-analytics-js/dist/plugin-vue'
-
-const ga = useGoogleAnalytics()
-ga.init()
-sendPageView()
 </script>
 ```
 
