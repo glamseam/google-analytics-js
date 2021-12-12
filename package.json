@@ -1,6 +1,6 @@
 {
     "name": "@d-gs/google-analytics-js",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "description": "Google Analytics JS.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -26,9 +26,6 @@
         "prebuild": "rimraf ./dist",
         "build": "tsc",
         "pub": "npm run build && npm publish --access=public"
-    },
-    "peerDependencies": {
-        "vue": "^3.0.0"
     },
     "devDependencies": {
         "@d-gs/eslint-config": "^0.1.10",
