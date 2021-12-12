@@ -14,12 +14,8 @@ export interface GoogleAnalyticsOptions {
 
 export type GoogleAnalyticsJs = ReturnType<typeof googleAnalyticsJs>
 
-const gtagScript = (measurementId: string) => {
-    return `window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '${measurementId}');`
-}
+const gtagScript = `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}`
 
 const loadScript = (src: string, scriptId: string): Promise<HTMLScriptElement> => {
     const scriptEl = document.createElement('script')
@@ -47,9 +43,8 @@ const loadScript = (src: string, scriptId: string): Promise<HTMLScriptElement> =
 
 
 export const googleAnalyticsJs = (
-    measurementId: string,
+    measurementIds: string[],
     {
-        measurementIdSecondary = undefined,
         isForceEnabled = false,
         stateKey = 'isEnabledGa',
         scriptId = 'googleTagManagerScript'
@@ -58,18 +53,23 @@ export const googleAnalyticsJs = (
     const init = () => {
         if (
             (isForceEnabled || localStorage.getItem(stateKey) === 'true')
-            && measurementId
+            && measurementIds.length !== 0
         ) {
             loadScript(
-                `https://www.googletagmanager.com/gtag/js?${measurementId}`,
+                `https://www.googletagmanager.com/gtag/js`,
                 scriptId
             )
                 .then(() => {
-                    const gtagScriptEl = document.createElement('script')
-                    gtagScriptEl.text = measurementIdSecondary
-                        ? `${gtagScript(measurementId)}gtag('config', '${measurementIdSecondary}');`
-                        : gtagScript(measurementId)
-                    document.body.appendChild(gtagScriptEl)
+                    setTimeout(() => {
+                        const gtagScriptEl = document.createElement('script')
+                        gtagScriptEl.text = gtagScript
+                        document.body.appendChild(gtagScriptEl)
+
+                        window.gtag('js', new Date())
+                        measurementIds.forEach((id) => {
+                            window.gtag('config', id)
+                        })
+                    }, 1000)
                 })
         }
     }
@@ -110,7 +110,7 @@ export const googleAnalyticsJs = (
     }
 
     const sendEvent = (
-        action: string,
+        eventName: Gtag.EventNames | string & {},
         {
             category,
             label,
@@ -126,17 +126,7 @@ export const googleAnalyticsJs = (
         Object.entries(event).forEach((v) => v[1] == null ? delete event[v[0]] : 0)
 
         if (window.gtag) {
-            window.gtag('event', action, event)
-        }
-    }
-
-    const toNext = (pagePath: string) => {
-        if (window.gtag) {
-            window.gtag('config', measurementId, { page_path: pagePath })
-
-            if (measurementIdSecondary) {
-                window.gtag('config', measurementIdSecondary, { page_path: pagePath })
-            }
+            window.gtag('event', eventName, event)
         }
     }
 
@@ -146,7 +136,6 @@ export const googleAnalyticsJs = (
         disagree,
         isEnabled,
         reset,
-        sendEvent,
-        toNext
+        sendEvent
     }
 }
