@@ -1,6 +1,7 @@
 # google-analytics-js
 
-WIP.
+WIP.<br>
+This package is available for Google Analytics V4 (gtag).
 
 # Install
 
@@ -78,3 +79,37 @@ const sendEvent = () => {
 }
 </script>
 ```
+
+# API
+
+```js
+const ga = googleAnalyticsJs(['G-XXXXXXXXXX'], options)
+
+// It must be initialized before it can be used, also mount the gtag script here.
+ga.init()
+
+// When `isForceEnabled` is `false`, it can be enabled by this function
+ga.agree()
+
+// When `isForceEnabled` is `false`, this function will disable it completely.
+ga.disagree()
+
+// Check if the status is currently valid.
+ga.isEnabled()
+
+// Reset the current state.
+ga.reset()
+
+// Send Google Analytiecs events.
+ga.sendEvent(
+  'eventName',
+  {
+    category: 'category',
+    label: 'label',
+    value: 'value'
+  }
+)
+```
+
+## Warning
+When `isForceEnabled` is true, "page_view" will be sent to Google Analytics without the user's permission
