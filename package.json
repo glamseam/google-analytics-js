@@ -1,6 +1,6 @@
 {
     "name": "@d-gs/google-analytics-js",
-    "version": "0.3.2",
+    "version": "0.3.3",
     "description": "Google Analytics JS.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
