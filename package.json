@@ -1,6 +1,6 @@
 {
     "name": "@d-gs/google-analytics-js",
-    "version": "0.3.3",
+    "version": "0.3.4",
     "description": "Google Analytics JS.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -32,7 +32,7 @@
         "@types/gtag.js": "^0.0.8",
         "eslint": "^8.4.1",
         "rimraf": "^3.0.2",
-        "typescript": "^4.5.3",
+        "typescript": "^4.5.4",
         "vue": "^3.2.24"
     }
 }
