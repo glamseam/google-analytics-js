@@ -24,7 +24,15 @@ const ga = googleAnalyticsJs(
   }
 )
 
-ga.init()  // Initialize
+const gaAgree = () => {
+  // If you agree, you will be initialized and Google Analytics will be activated.
+  ga.agree()
+}
+
+const gaDisagree = () => {
+  // If you disagree, Google Analytics will not work.
+  ga.disagree()
+}
 
 const sendEvent = () => {
   ga.sendEvent(
@@ -35,6 +43,8 @@ const sendEvent = () => {
   )
 }
 ```
+## Warning
+When `isForceEnabled` is `true`, "page_view" will be sent to Google Analytics without the user's permission
 
 # When using Vue3
 In `app.ts`
@@ -95,6 +105,7 @@ ga.agree()
 ga.disagree()
 
 // Check if the status is currently valid.
+// return bool
 ga.isEnabled()
 
 // Reset the current state.
@@ -110,6 +121,3 @@ ga.sendEvent(
   }
 )
 ```
-
-## Warning
-When `isForceEnabled` is true, "page_view" will be sent to Google Analytics without the user's permission
