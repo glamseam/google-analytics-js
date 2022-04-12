@@ -56,7 +56,7 @@ export const googleAnalyticsJs = (
             && measurementIds.length !== 0
         ) {
             loadScript(
-                `https://www.googletagmanager.com/gtag/js`,
+                'https://www.googletagmanager.com/gtag/js',
                 scriptId
             )
                 .then(() => {
@@ -93,11 +93,19 @@ export const googleAnalyticsJs = (
             return true
         }
 
-        if (localStorage.getItem(stateKey) === 'true') {
-            return true
+        return localStorage.getItem(stateKey) === 'true'
+    }
+
+    const getApprovalStatus = () => {
+        if (isForceEnabled || localStorage.getItem(stateKey) === 'true') {
+            return 'agree'
         }
 
-        return false
+        if (localStorage.getItem(stateKey) === 'false') {
+            return 'disagree'
+        }
+
+        return 'pending'
     }
 
     const reset = () => {
@@ -135,6 +143,7 @@ export const googleAnalyticsJs = (
         agree,
         disagree,
         isEnabled,
+        getApprovalStatus,
         reset,
         sendEvent
     }
