@@ -1,18 +1,14 @@
+export interface Options {
+    forceEnabled?: boolean
+    stateKey?: string
+    scriptId?: string
+}
+
 export interface SendEventOptions {
     category?: string
     label?: string
     value?: number
 }
-
-export interface GoogleAnalyticsOptions {
-    measurementIdSecondary?: string
-    isForceEnabled?: boolean
-    forceEnabledKey?: string
-    stateKey?: string
-    scriptId?: string
-}
-
-export type GoogleAnalyticsJs = ReturnType<typeof googleAnalyticsJs>
 
 const gtagScript = `window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}`
@@ -45,14 +41,14 @@ const loadScript = (src: string, scriptId: string): Promise<HTMLScriptElement> =
 export const googleAnalyticsJs = (
     measurementIds: string[],
     {
-        isForceEnabled = false,
-        stateKey = 'isEnabledGa',
-        scriptId = 'googleTagManagerScript'
-    }: GoogleAnalyticsOptions = {}
+        forceEnabled = false,
+        stateKey = 'enabledGa',
+        scriptId = 'GoogleTagManagerScript'
+    }: Options = {}
 ) => {
     const init = () => {
         if (
-            (isForceEnabled || localStorage.getItem(stateKey) === 'true')
+            (forceEnabled || localStorage.getItem(stateKey) === 'true')
             && measurementIds.length !== 0
         ) {
             loadScript(
@@ -75,7 +71,7 @@ export const googleAnalyticsJs = (
     }
 
     const agree = () => {
-        if (!isForceEnabled) {
+        if (!forceEnabled) {
             localStorage.setItem(stateKey, 'true')
         }
 
@@ -83,21 +79,13 @@ export const googleAnalyticsJs = (
     }
 
     const disagree = () => {
-        if (!isForceEnabled) {
+        if (!forceEnabled) {
             localStorage.setItem(stateKey, 'false')
         }
     }
 
-    const isEnabled = () => {
-        if (isForceEnabled) {
-            return true
-        }
-
-        return localStorage.getItem(stateKey) === 'true'
-    }
-
     const getApprovalStatus = () => {
-        if (isForceEnabled || localStorage.getItem(stateKey) === 'true') {
+        if (forceEnabled || localStorage.getItem(stateKey) === 'true') {
             return 'agree'
         }
 
@@ -131,7 +119,7 @@ export const googleAnalyticsJs = (
             value: value
         }
 
-        Object.entries(event).forEach((v) => v[1] == null ? delete event[v[0]] : 0)
+        Object.entries(event).forEach((v) => v[1] == undefined ? delete event[v[0]] : 0)
 
         if (window.gtag) {
             window.gtag('event', eventName, event)
@@ -142,7 +130,6 @@ export const googleAnalyticsJs = (
         init,
         agree,
         disagree,
-        isEnabled,
         getApprovalStatus,
         reset,
         sendEvent
