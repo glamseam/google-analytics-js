@@ -1,12 +1,17 @@
 # google-analytics-js
 
-WIP.<br>
 This package is available for Google Analytics V4 (gtag).
 
 # Install
 
 ```sh
 npm i @d-gs/google-analytics-js
+```
+
+or
+
+```sh
+pnpm add @d-gs/google-analytics-js
 ```
 
 # Usage
@@ -18,106 +23,31 @@ import { googleAnalyticsJs } from '@d-gs/google-analytics-js'
 const ga = googleAnalyticsJs(
   ['G-XXXXXXXXXX', 'G-XXXXXXXXXX'],  // Your measurement ids (required)
   {  // Options
-    isForceEnabled: false,  // (default: false)
-    stateKey: 'isEnabledGa',  // localStorage key (default: `isEnabledGa`)
-    scriptId: 'googleTagManagerScript'  // gtag script id (default: `googleTagManagerScript`)
+    forceEnabled: boolean,  // (default: false)
+    stateKey: string,  // localStorage key (default: `enabledGa`)
+    scriptId: string  // gtag script id (default: `GoogleTagManagerScript`)
   }
 )
 
-const gaAgree = () => {
-  // If you agree, you will be initialized and Google Analytics will be activated.
-  ga.agree()
-}
-
-const gaDisagree = () => {
-  // If you disagree, Google Analytics will not work.
-  ga.disagree()
-}
-
-const sendEvent = () => {
-  ga.sendEvent(
-    'contact_complete',
-    {
-      category: 'Contact'
-    }
-  )
-}
-```
-## Warning
-When `isForceEnabled` is `true`, "page_view" will be sent to Google Analytics without the user's permission
-
-# When using Vue3
-In `app.ts`
-
-```ts
-import { pluginGoogleAnalytics } from '@d-gs/google-analytics-js/dist/plugin-vue'
-app.use(pluginGoogleAnalytics(
-  {
-    measurementIds: ['G-XXXXXXXXXX', 'G-XXXXXXXXXX'],
-    options: {
-        isForceEnabled: true
-    }
-  }
-))
-```
-
-In `App.vue`
-
-```vue
-<script lang="ts" setup>
-import { useGoogleAnalytics } from '@d-gs/google-analytics-js/dist/plugin-vue'
-
-const ga = useGoogleAnalytics()
-ga.init()
-</script>
-```
-
-In `Comp.vue`
-
-```vue
-<script lang="ts" setup>
-import { useGoogleAnalytics } from '@d-gs/google-analytics-js/dist/plugin-vue'
-
-const ga = useGoogleAnalytics()
-const sendEvent = () => {
-  ga.sendEvent(
-    'contact_complete',
-    {
-      category: 'Contact'
-    }
-  )
-}
-</script>
-```
-
-# API
-
-```js
-const ga = googleAnalyticsJs(['G-XXXXXXXXXX'], options)
-
-// It must be initialized before it can be used, also mount the gtag script here.
-ga.init()
-
-// When `isForceEnabled` is `false`, it can be enabled by this function
+// If you agree, you will be initialized and Google Analytics will be activated.
 ga.agree()
 
-// When `isForceEnabled` is `false`, this function will disable it completely.
+// If you disagree, Google Analytics will not work.
 ga.disagree()
 
-// Check if the status is currently valid.
-// return bool
-ga.isEnabled()
+// Return 'agree' | 'disagree' | 'pending'
+ga.getApprovalStatus()
 
-// Reset the current state.
+// Return to 'pending' status
 ga.reset()
 
-// Send Google Analytiecs events.
+// Send event
 ga.sendEvent(
-  'eventName',
+  'contact_complete',
   {
-    category: 'category',
-    label: 'label',
-    value: 'value'
+    category: 'Contact'
   }
 )
 ```
+## Warning
+When `forceEnabled` is `true`, "page_view" will be sent to Google Analytics without the user's permission
