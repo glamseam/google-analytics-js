@@ -1,7 +1,5 @@
 {
     "compilerOptions": {
-        "baseUrl": "./",
-        "declaration": true,
         "esModuleInterop": true,
         "experimentalDecorators": true,
         "lib": [
@@ -12,16 +10,16 @@
         "module": "esnext",
         "moduleResolution": "node",
         "noErrorTruncation": true,
-        "outDir": "dist",
         "removeComments": true,
         "resolveJsonModule": true,
         "skipLibCheck": true,
-        "sourceMap": true,
+        "sourceMap": false,
         "strict": true,
         "suppressImplicitAnyIndexErrors": true,
-        "target": "es6"
+        "target": "es2017"
     },
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "dist"
     ]
 }
