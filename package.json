@@ -1,11 +1,21 @@
 {
     "name": "@d-gs/google-analytics-js",
-    "version": "0.3.5",
+    "version": "0.4.0",
     "description": "Google Analytics JS.",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "type": "module",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "require": "./dist/index.cjs",
+            "import": "./dist/index.mjs",
+            "types": "./dist/index.d.ts"
+        }
+    },
     "files": [
-        "dist"
+        "dist",
+        "client.d.ts"
     ],
     "author": "__d",
     "license": "MIT",
@@ -23,16 +33,14 @@
         "url": "https://github.com/glamseam/google-analytics-js/issues"
     },
     "scripts": {
-        "prebuild": "rimraf ./dist",
-        "build": "tsc",
-        "pub": "npm run build && npm publish --access=public"
+        "build": "unbuild",
+        "pub": "pnpm build && pnpm publish --access=public"
     },
     "devDependencies": {
         "@d-gs/eslint-config": "^0.1.12",
         "@types/gtag.js": "^0.0.10",
-        "eslint": "^8.13.0",
-        "rimraf": "^3.0.2",
-        "typescript": "^4.6.3",
-        "vue": "^3.2.31"
+        "eslint": "^8.22.0",
+        "typescript": "^4.7.4",
+        "unbuild": "^0.8.9"
     }
 }
